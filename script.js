@@ -14,14 +14,16 @@ const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
 const numberChars = '0123456789';
 const symbolChars = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
 
-lengthValue.textContent = passwordLength.value; // Initial display of length
+if (passwordLength) {
+    lengthValue.textContent = passwordLength.value; // Initial display of length
+    passwordLength.addEventListener('input', () => {
+        lengthValue.textContent = passwordLength.value;
+    });
+}
 
-passwordLength.addEventListener('input', () => {
-    lengthValue.textContent = passwordLength.value;
-});
 
-generatePasswordBtn.addEventListener('click', generatePassword);
-copyPasswordBtn.addEventListener('click', copyPasswordToClipboard); // 更改函数名以避免冲突
+if (generatePasswordBtn) generatePasswordBtn.addEventListener('click', generatePassword);
+if (copyPasswordBtn) copyPasswordBtn.addEventListener('click', copyPasswordToClipboard); 
 
 function generatePassword() {
     let characters = '';
@@ -45,7 +47,7 @@ function generatePassword() {
     passwordOutput.value = password;
 }
 
-function copyPasswordToClipboard() { // 更改函数名以避免冲突
+function copyPasswordToClipboard() { 
     if (passwordOutput.value) {
         navigator.clipboard.writeText(passwordOutput.value)
             .then(() => {
@@ -66,9 +68,9 @@ const md5Output = document.getElementById('md5Output');
 const calculateMd5Btn = document.getElementById('calculateMd5');
 const copyMd5Btn = document.getElementById('copyMd5');
 
-if (calculateMd5Btn) calculateMd5Btn.addEventListener('click', calculateMd5); // 检查元素是否存在
-if (md5Input) md5Input.addEventListener('input', calculateMd5); // 输入时自动计算
-if (copyMd5Btn) copyMd5Btn.addEventListener('click', copyMd5ToClipboard); // 检查元素是否存在
+if (calculateMd5Btn) calculateMd5Btn.addEventListener('click', calculateMd5);
+if (md5Input) md5Input.addEventListener('input', calculateMd5);
+if (copyMd5Btn) copyMd5Btn.addEventListener('click', copyMd5ToClipboard);
 
 function calculateMd5() {
     const text = md5Input.value;
@@ -142,6 +144,59 @@ function copyUrlOutputToClipboard() {
     }
 }
 
+// JSON 格式化模块
+const jsonInput = document.getElementById('jsonInput');
+const jsonOutput = document.getElementById('jsonOutput');
+const formatJsonBtn = document.getElementById('formatJson');
+const minifyJsonBtn = document.getElementById('minifyJson');
+const copyJsonOutputBtn = document.getElementById('copyJsonOutput');
+
+if (formatJsonBtn) formatJsonBtn.addEventListener('click', formatJson);
+if (minifyJsonBtn) minifyJsonBtn.addEventListener('click', minifyJson);
+if (copyJsonOutputBtn) copyJsonOutputBtn.addEventListener('click', copyJsonOutputToClipboard);
+
+function formatJson() {
+    if (!jsonInput.value) {
+        jsonOutput.value = '';
+        return;
+    }
+    try {
+        const obj = JSON.parse(jsonInput.value);
+        jsonOutput.value = JSON.stringify(obj, null, 4); // 4 spaces indentation
+    } catch (e) {
+        alert('JSON 格式不正确！');
+        jsonOutput.value = '格式化错误: ' + e.message;
+    }
+}
+
+function minifyJson() {
+    if (!jsonInput.value) {
+        jsonOutput.value = '';
+        return;
+    }
+    try {
+        const obj = JSON.parse(jsonInput.value);
+        jsonOutput.value = JSON.stringify(obj);
+    } catch (e) {
+        alert('JSON 格式不正确！');
+        jsonOutput.value = '压缩错误: ' + e.message;
+    }
+}
+
+function copyJsonOutputToClipboard() {
+    if (jsonOutput.value) {
+        navigator.clipboard.writeText(jsonOutput.value)
+            .then(() => {
+                alert('JSON 结果已复制到剪贴板！');
+            })
+            .catch(err => {
+                console.error('复制失败:', err);
+                alert('复制失败，请手动复制。');
+            });
+    } else {
+        alert('没有 JSON 结果可供复制。');
+    }
+}
 
 // Tab 切换功能
 const tabButtons = document.querySelectorAll('.tab-button');
@@ -172,6 +227,10 @@ tabButtons.forEach(button => {
         // 激活URL编码/解码工具时，如果输入框有内容，自动编码
         if (targetTab === 'urlEncoderDecoder' && urlInput && urlInput.value) {
              encodeUrl(); // 默认激活时执行编码
+        }
+        // 激活JSON格式化工具时，如果输入框有内容，自动格式化
+        if (targetTab === 'jsonFormatter' && jsonInput && jsonInput.value) {
+             formatJson(); // 默认激活时执行格式化
         }
     });
 });
