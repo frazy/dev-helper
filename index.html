@@ -11,6 +11,7 @@
         <div class="tool-selector">
             <button class="tab-button active" data-tab="passwordGenerator">密码生成器</button>
             <button class="tab-button" data-tab="md5Generator">MD5 生成器</button>
+            <button class="tab-button" data-tab="urlEncoderDecoder">URL 编码/解码</button>
         </div>
 
         <div id="passwordGenerator" class="tool-content active">
@@ -56,8 +57,22 @@
             </div>
             <button id="calculateMd5">计算 MD5</button>
         </div>
+
+        <div id="urlEncoderDecoder" class="tool-content">
+            <h1>URL 编码/解码</h1>
+            <div class="url-input-group">
+                <textarea id="urlInput" placeholder="输入 URL 文本..."></textarea>
+            </div>
+            <div class="url-button-group">
+                <button id="encodeUrl">编码</button>
+                <button id="decodeUrl">解码</button>
+            </div>
+            <div class="url-output-group">
+                <textarea id="urlOutput" readonly placeholder="结果"></textarea>
+            </div>
+            <button id="copyUrlOutput">复制结果</button>
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="script.js"></script>
 </body>
-</html>

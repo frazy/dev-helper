@@ -66,9 +66,9 @@ const md5Output = document.getElementById('md5Output');
 const calculateMd5Btn = document.getElementById('calculateMd5');
 const copyMd5Btn = document.getElementById('copyMd5');
 
-calculateMd5Btn.addEventListener('click', calculateMd5);
-md5Input.addEventListener('input', calculateMd5); // 输入时自动计算
-copyMd5Btn.addEventListener('click', copyMd5ToClipboard);
+if (calculateMd5Btn) calculateMd5Btn.addEventListener('click', calculateMd5); // 检查元素是否存在
+if (md5Input) md5Input.addEventListener('input', calculateMd5); // 输入时自动计算
+if (copyMd5Btn) copyMd5Btn.addEventListener('click', copyMd5ToClipboard); // 检查元素是否存在
 
 function calculateMd5() {
     const text = md5Input.value;
@@ -95,6 +95,54 @@ function copyMd5ToClipboard() {
     }
 }
 
+// URL 编码/解码模块
+const urlInput = document.getElementById('urlInput');
+const urlOutput = document.getElementById('urlOutput');
+const encodeUrlBtn = document.getElementById('encodeUrl');
+const decodeUrlBtn = document.getElementById('decodeUrl');
+const copyUrlOutputBtn = document.getElementById('copyUrlOutput');
+
+if (encodeUrlBtn) encodeUrlBtn.addEventListener('click', encodeUrl);
+if (decodeUrlBtn) decodeUrlBtn.addEventListener('click', decodeUrl);
+if (copyUrlOutputBtn) copyUrlOutputBtn.addEventListener('click', copyUrlOutputToClipboard);
+
+function encodeUrl() {
+    if (urlInput.value) {
+        urlOutput.value = encodeURIComponent(urlInput.value);
+    } else {
+        urlOutput.value = '';
+    }
+}
+
+function decodeUrl() {
+    if (urlInput.value) {
+        try {
+            urlOutput.value = decodeURIComponent(urlInput.value);
+        } catch (e) {
+            alert('解码失败，请检查输入的 URL 编码是否正确！');
+            urlOutput.value = '解码错误: ' + e.message;
+        }
+    } else {
+        urlOutput.value = '';
+    }
+}
+
+function copyUrlOutputToClipboard() {
+    if (urlOutput.value) {
+        navigator.clipboard.writeText(urlOutput.value)
+            .then(() => {
+                alert('URL 结果已复制到剪贴板！');
+            })
+            .catch(err => {
+                console.error('复制失败:', err);
+                alert('复制失败，请手动复制。');
+            });
+    } else {
+        alert('没有 URL 结果可供复制。');
+    }
+}
+
+
 // Tab 切换功能
 const tabButtons = document.querySelectorAll('.tab-button');
 const toolContents = document.querySelectorAll('.tool-content');
@@ -114,12 +162,16 @@ tabButtons.forEach(button => {
             }
         });
         // 激活MD5工具时如果输入框有内容，自动计算
-        if (targetTab === 'md5Generator' && md5Input.value) {
+        if (targetTab === 'md5Generator' && md5Input && md5Input.value) {
             calculateMd5();
         }
         // 激活密码生成器时生成密码
-        if (targetTab === 'passwordGenerator') {
+        if (targetTab === 'passwordGenerator' && passwordOutput) {
             generatePassword();
+        }
+        // 激活URL编码/解码工具时，如果输入框有内容，自动编码
+        if (targetTab === 'urlEncoderDecoder' && urlInput && urlInput.value) {
+             encodeUrl(); // 默认激活时执行编码
         }
     });
 });
