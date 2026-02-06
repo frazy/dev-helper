@@ -15,7 +15,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px; /* 稍微扩大容器以容纳更多内容 */
+    max-width: 800px; /* 进一步扩大容器以容纳更多内容，适应 PC 端 */
     text-align: center;
     position: relative; /* 用于定位tab按钮 */
 }
@@ -43,6 +43,9 @@ h1 {
     transition: background-color 0.2s, color 0.2s;
     border-radius: 5px 5px 0 0;
     margin: 0 2px;
+    flex-grow: 1; /* 允许按钮平均分配空间 */
+    min-width: fit-content; /* 确保按钮内容不被挤压 */
+    white-space: nowrap; /* 防止文字换行 */
 }
 
 .tab-button:hover {
@@ -64,12 +67,12 @@ h1 {
     display: block; /* 激活时显示 */
 }
 
-.password-display, .md5-output-group, .url-output-group, .json-output-group { /* 添加 json-output-group */
+.password-display, .md5-output-group, .url-output-group, .json-output-group, .timestamp-output-group { /* 添加 timestamp-output-group */
     display: flex;
     margin-bottom: 25px;
 }
 
-#passwordOutput, #md5Output, #urlOutput, #jsonOutput { /* 添加 #jsonOutput */
+#passwordOutput, #md5Output, #urlOutput, #jsonOutput, #convertedResult { /* 添加 #convertedResult */
     flex-grow: 1;
     padding: 10px;
     border: 1px solid #ddd;
@@ -79,7 +82,7 @@ h1 {
     word-break: break-all; /* 防止长密码撑开布局 */
 }
 
-#copyPassword, #copyMd5, #copyUrlOutput, #copyJsonOutput { /* 添加 #copyJsonOutput */
+#copyPassword, #copyMd5, #copyUrlOutput, #copyJsonOutput, #copyConvertedResult { /* 添加 #copyConvertedResult */
     padding: 10px 15px;
     background-color: #007bff;
     color: white;
@@ -89,7 +92,7 @@ h1 {
     transition: background-color 0.2s;
 }
 
-#copyPassword:hover, #copyMd5:hover, #copyUrlOutput:hover, #copyJsonOutput:hover { /* 添加 #copyJsonOutput */
+#copyPassword:hover, #copyMd5:hover, #copyUrlOutput:hover, #copyJsonOutput:hover, #copyConvertedResult:hover { /* 添加 #copyConvertedResult */
     background-color: #0056b3;
 }
 
@@ -113,7 +116,7 @@ h1 {
     margin-right: 10px;
 }
 
-#generatePassword, #calculateMd5, #encodeUrl, #decodeUrl, #copyUrlOutput, #formatJson, #minifyJson, #copyJsonOutput { /* 添加 JSON 按钮 */
+#generatePassword, #calculateMd5, #encodeUrl, #decodeUrl, #copyUrlOutput, #formatJson, #minifyJson, #copyJsonOutput, #convertTimestampToDate, #convertDateToTimestamp { /* 添加时间转换器按钮 */
     width: 100%;
     padding: 12px;
     background-color: #28a745;
@@ -126,24 +129,40 @@ h1 {
     margin-top: 20px;
 }
 
-#generatePassword:hover, #calculateMd5:hover, #encodeUrl:hover, #decodeUrl:hover, #copyUrlOutput:hover, #formatJson:hover, #minifyJson:hover, #copyJsonOutput:hover { /* 添加 JSON 按钮 */
+#generatePassword:hover, #calculateMd5:hover, #encodeUrl:hover, #decodeUrl:hover, #copyUrlOutput:hover, #formatJson:hover, #minifyJson:hover, #copyJsonOutput:hover, #convertTimestampToDate:hover, #convertDateToTimestamp:hover { /* 添加时间转换器按钮 */
     background-color: #218838;
 }
 
-.md5-input-group, .url-input-group, .json-input-group { /* 统一 textarea 样式 */
+.md5-input-group, .url-input-group, .json-input-group, .timestamp-input-group, .date-input-group { /* 添加时间转换器输入组 */
     margin-bottom: 20px;
+    display: flex; /* 让label和input在同一行 */
+    flex-direction: column; /* 垂直排列 */
+    align-items: flex-start; /* 左对齐 */
 }
 
-#md5Input, #urlInput, #urlOutput, #jsonInput, #jsonOutput { /* 统一 textarea 样式 */
+.timestamp-input-group label, .date-input-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#md5Input, #urlInput, #urlOutput, #jsonInput, #jsonOutput, #timestampInput, #dateInput { /* 统一 textarea 和 input 样式 */
     width: calc(100% - 22px); /* 减去padding和border */
-    min-height: 100px;
+    min-height: 40px; /* input 增加最小高度 */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1em;
     resize: vertical; /* 允许垂直调整大小 */
     box-sizing: border-box; /* 确保padding和border包含在width内 */
+    margin-top: 5px; /* 与label的间距 */
 }
+
+#timestampInput, #dateInput {
+    min-height: unset; /* input不需要min-height */
+    height: 40px; /* 固定input高度 */
+    resize: none; /* input不允许resize */
+}
+
 
 .url-button-group, .json-button-group { /* 添加 json-button-group */
     display: flex;
@@ -168,30 +187,15 @@ h1 {
 
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 768px) { /* 调整断点以适应移动设备 */
     .container {
         margin: 20px;
         padding: 20px;
-    }
-
-    .control-group {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .control-group input[type="range"] {
-        width: 100%;
-        margin-right: 0;
-        margin-top: 5px;
-    }
-
-    .control-group label {
-        margin-left: 0;
-        margin-bottom: 5px;
+        max-width: 90%; /* 移动设备上更宽 */
     }
 
     .tool-selector {
-        flex-direction: column; /* 小屏幕上按钮垂直排列 */
+        flex-direction: column; /* 移动设备上按钮垂直排列 */
     }
 
     .tab-button {
