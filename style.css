@@ -30,6 +30,7 @@ h1 {
     justify-content: center;
     margin-bottom: 20px;
     border-bottom: 1px solid #eee;
+    flex-wrap: wrap; /* 允许换行 */
 }
 
 .tab-button {
@@ -63,12 +64,12 @@ h1 {
     display: block; /* 激活时显示 */
 }
 
-.password-display, .md5-output-group, .url-input-group, .url-output-group { /* 添加 url-input-group 和 url-output-group */
+.password-display, .md5-output-group, .url-output-group, .json-output-group { /* 添加 json-output-group */
     display: flex;
     margin-bottom: 25px;
 }
 
-#passwordOutput, #md5Output, #urlOutput { /* 添加 #urlOutput */
+#passwordOutput, #md5Output, #urlOutput, #jsonOutput { /* 添加 #jsonOutput */
     flex-grow: 1;
     padding: 10px;
     border: 1px solid #ddd;
@@ -78,7 +79,7 @@ h1 {
     word-break: break-all; /* 防止长密码撑开布局 */
 }
 
-#copyPassword, #copyMd5, #copyUrlOutput { /* 添加 #copyUrlOutput */
+#copyPassword, #copyMd5, #copyUrlOutput, #copyJsonOutput { /* 添加 #copyJsonOutput */
     padding: 10px 15px;
     background-color: #007bff;
     color: white;
@@ -88,7 +89,7 @@ h1 {
     transition: background-color 0.2s;
 }
 
-#copyPassword:hover, #copyMd5:hover, #copyUrlOutput:hover { /* 添加 #copyUrlOutput */
+#copyPassword:hover, #copyMd5:hover, #copyUrlOutput:hover, #copyJsonOutput:hover { /* 添加 #copyJsonOutput */
     background-color: #0056b3;
 }
 
@@ -112,7 +113,7 @@ h1 {
     margin-right: 10px;
 }
 
-#generatePassword, #calculateMd5, #encodeUrl, #decodeUrl, #copyUrlOutput { /* 添加 URL 按钮 */
+#generatePassword, #calculateMd5, #encodeUrl, #decodeUrl, #copyUrlOutput, #formatJson, #minifyJson, #copyJsonOutput { /* 添加 JSON 按钮 */
     width: 100%;
     padding: 12px;
     background-color: #28a745;
@@ -125,15 +126,15 @@ h1 {
     margin-top: 20px;
 }
 
-#generatePassword:hover, #calculateMd5:hover, #encodeUrl:hover, #decodeUrl:hover, #copyUrlOutput:hover { /* 添加 URL 按钮 */
+#generatePassword:hover, #calculateMd5:hover, #encodeUrl:hover, #decodeUrl:hover, #copyUrlOutput:hover, #formatJson:hover, #minifyJson:hover, #copyJsonOutput:hover { /* 添加 JSON 按钮 */
     background-color: #218838;
 }
 
-.md5-input-group, .url-input-group { /* 统一 textarea 样式 */
+.md5-input-group, .url-input-group, .json-input-group { /* 统一 textarea 样式 */
     margin-bottom: 20px;
 }
 
-#md5Input, #urlInput, #urlOutput { /* 统一 textarea 样式 */
+#md5Input, #urlInput, #urlOutput, #jsonInput, #jsonOutput { /* 统一 textarea 样式 */
     width: calc(100% - 22px); /* 减去padding和border */
     min-height: 100px;
     padding: 10px;
@@ -144,13 +145,13 @@ h1 {
     box-sizing: border-box; /* 确保padding和border包含在width内 */
 }
 
-.url-button-group {
+.url-button-group, .json-button-group { /* 添加 json-button-group */
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
 }
 
-.url-button-group button {
+.url-button-group button, .json-button-group button { /* 统一按钮样式 */
     width: 48%; /* 让两个按钮平分宽度 */
     padding: 10px;
     background-color: #007bff;
@@ -161,7 +162,7 @@ h1 {
     transition: background-color 0.2s;
 }
 
-.url-button-group button:hover {
+.url-button-group button:hover, .json-button-group button:hover { /* 统一按钮样式 */
     background-color: #0056b3;
 }
 
@@ -189,10 +190,19 @@ h1 {
         margin-bottom: 5px;
     }
 
-    .url-button-group {
+    .tool-selector {
+        flex-direction: column; /* 小屏幕上按钮垂直排列 */
+    }
+
+    .tab-button {
+        width: 100%;
+        margin-bottom: 5px; /* 按钮之间增加间距 */
+    }
+
+    .url-button-group, .json-button-group {
         flex-direction: column;
     }
-    .url-button-group button {
+    .url-button-group button, .json-button-group button {
         width: 100%;
         margin-bottom: 10px;
     }

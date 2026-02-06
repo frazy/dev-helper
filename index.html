@@ -12,6 +12,7 @@
             <button class="tab-button active" data-tab="passwordGenerator">密码生成器</button>
             <button class="tab-button" data-tab="md5Generator">MD5 生成器</button>
             <button class="tab-button" data-tab="urlEncoderDecoder">URL 编码/解码</button>
+            <button class="tab-button" data-tab="jsonFormatter">JSON 格式化</button>
         </div>
 
         <div id="passwordGenerator" class="tool-content active">
@@ -71,6 +72,21 @@
                 <textarea id="urlOutput" readonly placeholder="结果"></textarea>
             </div>
             <button id="copyUrlOutput">复制结果</button>
+        </div>
+
+        <div id="jsonFormatter" class="tool-content">
+            <h1>JSON 格式化</h1>
+            <div class="json-input-group">
+                <textarea id="jsonInput" placeholder="输入 JSON 文本..."></textarea>
+            </div>
+            <div class="json-button-group">
+                <button id="formatJson">格式化</button>
+                <button id="minifyJson">压缩</button>
+            </div>
+            <div class="json-output-group">
+                <textarea id="jsonOutput" readonly placeholder="格式化/压缩结果"></textarea>
+            </div>
+            <button id="copyJsonOutput">复制结果</button>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
