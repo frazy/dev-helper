@@ -8,36 +8,56 @@
 </head>
 <body>
     <div class="container">
-        <h1>密码生成器</h1>
-        <div class="password-display">
-            <input type="text" id="passwordOutput" readonly>
-            <button id="copyPassword">复制</button>
+        <div class="tool-selector">
+            <button class="tab-button active" data-tab="passwordGenerator">密码生成器</button>
+            <button class="tab-button" data-tab="md5Generator">MD5 生成器</button>
         </div>
-        <div class="controls">
-            <div class="control-group">
-                <label for="passwordLength">密码长度:</label>
-                <input type="range" id="passwordLength" min="8" max="128" value="12">
-                <span id="lengthValue">12</span>
+
+        <div id="passwordGenerator" class="tool-content active">
+            <h1>密码生成器</h1>
+            <div class="password-display">
+                <input type="text" id="passwordOutput" readonly>
+                <button id="copyPassword">复制</button>
             </div>
-            <div class="control-group">
-                <input type="checkbox" id="includeUppercase" checked>
-                <label for="includeUppercase">包含大写字母</label>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="passwordLength">密码长度:</label>
+                    <input type="range" id="passwordLength" min="8" max="128" value="12">
+                    <span id="lengthValue">12</span>
+                </div>
+                <div class="control-group">
+                    <input type="checkbox" id="includeUppercase" checked>
+                    <label for="includeUppercase">包含大写字母</label>
+                </div>
+                <div class="control-group">
+                    <input type="checkbox" id="includeLowercase" checked>
+                    <label for="includeLowercase">包含小写字母</label>
+                </div>
+                <div class="control-group">
+                    <input type="checkbox" id="includeNumbers" checked>
+                    <label for="includeNumbers">包含数字</label>
+                </div>
+                <div class="control-group">
+                    <input type="checkbox" id="includeSymbols">
+                    <label for="includeSymbols">包含符号</label>
+                </div>
+                <button id="generatePassword">生成密码</button>
             </div>
-            <div class="control-group">
-                <input type="checkbox" id="includeLowercase" checked>
-                <label for="includeLowercase">包含小写字母</label>
+        </div>
+
+        <div id="md5Generator" class="tool-content">
+            <h1>MD5 生成器</h1>
+            <div class="md5-input-group">
+                <textarea id="md5Input" placeholder="输入文本..."></textarea>
             </div>
-            <div class="control-group">
-                <input type="checkbox" id="includeNumbers" checked>
-                <label for="includeNumbers">包含数字</label>
+            <div class="md5-output-group">
+                <input type="text" id="md5Output" readonly placeholder="MD5 结果">
+                <button id="copyMd5">复制</button>
             </div>
-            <div class="control-group">
-                <input type="checkbox" id="includeSymbols">
-                <label for="includeSymbols">包含符号</label>
-            </div>
-            <button id="generatePassword">生成密码</button>
+            <button id="calculateMd5">计算 MD5</button>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

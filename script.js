@@ -1,3 +1,4 @@
+// 密码生成器模块
 const passwordOutput = document.getElementById('passwordOutput');
 const copyPasswordBtn = document.getElementById('copyPassword');
 const passwordLength = document.getElementById('passwordLength');
@@ -20,7 +21,7 @@ passwordLength.addEventListener('input', () => {
 });
 
 generatePasswordBtn.addEventListener('click', generatePassword);
-copyPasswordBtn.addEventListener('click', copyToClipboard);
+copyPasswordBtn.addEventListener('click', copyPasswordToClipboard); // 更改函数名以避免冲突
 
 function generatePassword() {
     let characters = '';
@@ -44,7 +45,7 @@ function generatePassword() {
     passwordOutput.value = password;
 }
 
-function copyToClipboard() {
+function copyPasswordToClipboard() { // 更改函数名以避免冲突
     if (passwordOutput.value) {
         navigator.clipboard.writeText(passwordOutput.value)
             .then(() => {
@@ -59,5 +60,71 @@ function copyToClipboard() {
     }
 }
 
-// Generate a password on initial load
-generatePassword();
+// MD5 生成器模块
+const md5Input = document.getElementById('md5Input');
+const md5Output = document.getElementById('md5Output');
+const calculateMd5Btn = document.getElementById('calculateMd5');
+const copyMd5Btn = document.getElementById('copyMd5');
+
+calculateMd5Btn.addEventListener('click', calculateMd5);
+md5Input.addEventListener('input', calculateMd5); // 输入时自动计算
+copyMd5Btn.addEventListener('click', copyMd5ToClipboard);
+
+function calculateMd5() {
+    const text = md5Input.value;
+    if (text) {
+        const hash = CryptoJS.MD5(text).toString();
+        md5Output.value = hash;
+    } else {
+        md5Output.value = '';
+    }
+}
+
+function copyMd5ToClipboard() {
+    if (md5Output.value) {
+        navigator.clipboard.writeText(md5Output.value)
+            .then(() => {
+                alert('MD5 值已复制到剪贴板！');
+            })
+            .catch(err => {
+                console.error('复制失败:', err);
+                alert('复制失败，请手动复制。');
+            });
+    } else {
+        alert('没有 MD5 值可供复制。');
+    }
+}
+
+// Tab 切换功能
+const tabButtons = document.querySelectorAll('.tab-button');
+const toolContents = document.querySelectorAll('.tool-content');
+
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const targetTab = button.dataset.tab;
+
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        toolContents.forEach(content => {
+            if (content.id === targetTab) {
+                content.classList.add('active');
+            } else {
+                content.classList.remove('active');
+            }
+        });
+        // 激活MD5工具时如果输入框有内容，自动计算
+        if (targetTab === 'md5Generator' && md5Input.value) {
+            calculateMd5();
+        }
+        // 激活密码生成器时生成密码
+        if (targetTab === 'passwordGenerator') {
+            generatePassword();
+        }
+    });
+});
+
+// Initial load: activate password generator and generate a password
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.tab-button[data-tab="passwordGenerator"]').click();
+});
