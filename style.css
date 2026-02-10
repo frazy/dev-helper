@@ -64,14 +64,17 @@ body {
 
 .container {
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
+    /* 进一步扩大以支持并排展示或大数据 */
     background: var(--card-bg);
     backdrop-filter: var(--glass-blur);
     border: 1px solid var(--card-border);
     border-radius: 24px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     padding: 40px;
+    transition: width 0.3s ease;
 }
+
 
 header {
     margin-bottom: 40px;
@@ -184,6 +187,13 @@ textarea:focus {
 textarea {
     min-height: 120px;
     resize: vertical;
+    line-height: 1.5;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    /* 代码类文本使用等宽字体 */
+}
+
+.large-text-area {
+    min-height: 350px !important;
 }
 
 /* 按钮 */
