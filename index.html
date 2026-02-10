@@ -13,8 +13,8 @@
 
 <body>
     <div class="app-background"></div>
-    <div class="container">
-        <header>
+    <div class="container main-layout">
+        <aside class="sidebar">
             <div class="logo">Dev Helper</div>
             <nav class="tool-selector">
                 <button class="tab-button" data-tab="passwordGenerator">密码生成</button>
@@ -23,12 +23,16 @@
                 <button class="tab-button" data-tab="jsonFormatter">JSON 格式化</button>
                 <button class="tab-button" data-tab="timestampConverter">时间戳转换</button>
             </nav>
-        </header>
+            <div class="sidebar-footer">
+                v2.0 Extreme
+            </div>
+        </aside>
 
-        <main id="app-content">
+        <main id="app-content" class="content-area">
             <!-- 模块内容将在这里动态渲染 -->
         </main>
     </div>
+
 
     <!-- 依赖库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>

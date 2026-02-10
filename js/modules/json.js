@@ -4,17 +4,25 @@ export const JsonModule = {
     render: () => `
         <div id="jsonFormatter" class="tool-content active">
             <h1>JSON 格式化</h1>
-            <div class="input-area">
-                <textarea id="jsonInput" class="large-text-area" placeholder="在此输入原始 JSON..."></textarea>
-            </div>
-            <div class="button-group">
-                <button id="formatJson" class="secondary-btn">格式化</button>
-                <button id="minifyJson" class="secondary-btn">压缩</button>
-                <button id="clearJson" class="secondary-btn" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">清空内容</button>
-            </div>
-            <div class="output-area">
-                <textarea id="jsonOutput" class="large-text-area" readonly placeholder="输出结果"></textarea>
-                <button id="copyJsonOutput" class="primary-btn">复制格式化后的内容</button>
+            
+            <div class="dual-pane">
+                <div class="input-pane">
+                    <label class="pane-label">原始文本 / 编辑区</label>
+                    <textarea id="jsonInput" style="height: 55vh; min-height: 400px;" placeholder="在此输入原始 JSON..."></textarea>
+                    <div class="button-group" style="margin-top:20px; display:flex; gap:10px;">
+                        <button id="formatJson" class="secondary-btn" style="flex:1">格式化 →</button>
+                        <button id="minifyJson" class="secondary-btn" style="flex:1">压缩内容</button>
+                    </div>
+                </div>
+
+                <div class="output-pane">
+                    <label class="pane-label">处理结果 (只读)</label>
+                    <textarea id="jsonOutput" style="height: 55vh; min-height: 400px;" readonly placeholder="输出结果将在这里显示"></textarea>
+                    <div class="button-group" style="margin-top:20px; display:flex; gap:10px;">
+                        <button id="copyJsonOutput" class="primary-btn" style="flex:2; margin:0">复制结果</button>
+                        <button id="clearJson" class="secondary-btn" style="flex:1; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);">清空</button>
+                    </div>
+                </div>
             </div>
         </div>
     `,
@@ -33,7 +41,7 @@ export const JsonModule = {
                 jsonOutput.value = JSON.stringify(obj, null, 4);
                 showToast('已完成 JSON 格式化');
             } catch (e) {
-                showToast('JSON 格式不正确: ' + e.message, 'error');
+                showToast('JSON 格式有误: ' + e.message, 'error');
             }
         });
 
@@ -44,7 +52,7 @@ export const JsonModule = {
                 jsonOutput.value = JSON.stringify(obj);
                 showToast('已完成内容压缩');
             } catch (e) {
-                showToast('JSON 格式不正确', 'error');
+                showToast('JSON 解析失败', 'error');
             }
         });
 
