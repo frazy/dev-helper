@@ -1,113 +1,38 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>密码生成器 - Dev Helper</title>
+    <title>开发者助手 - Dev Helper</title>
+    <!-- 引入外部字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <div class="app-background"></div>
     <div class="container">
-        <div class="tool-selector">
-            <button class="tab-button active" data-tab="passwordGenerator">密码生成器</button>
-            <button class="tab-button" data-tab="md5Generator">MD5 生成器</button>
-            <button class="tab-button" data-tab="urlEncoderDecoder">URL 编码/解码</button>
-            <button class="tab-button" data-tab="jsonFormatter">JSON 格式化</button>
-            <button class="tab-button" data-tab="timestampConverter">时间戳转换</button>
-        </div>
+        <header>
+            <div class="logo">Dev Helper</div>
+            <nav class="tool-selector">
+                <button class="tab-button" data-tab="passwordGenerator">密码生成</button>
+                <button class="tab-button" data-tab="md5Generator">MD5 生成</button>
+                <button class="tab-button" data-tab="urlEncoderDecoder">URL 编解码</button>
+                <button class="tab-button" data-tab="jsonFormatter">JSON 格式化</button>
+                <button class="tab-button" data-tab="timestampConverter">时间戳转换</button>
+            </nav>
+        </header>
 
-        <div id="passwordGenerator" class="tool-content active">
-            <h1>密码生成器</h1>
-            <div class="password-display">
-                <input type="text" id="passwordOutput" readonly>
-                <button id="copyPassword">复制</button>
-            </div>
-            <div class="controls">
-                <div class="control-group">
-                    <label for="passwordLength">密码长度:</label>
-                    <input type="range" id="passwordLength" min="8" max="128" value="20">
-                    <span id="lengthValue">12</span>
-                </div>
-                <div class="control-group">
-                    <input type="checkbox" id="includeUppercase" checked>
-                    <label for="includeUppercase">包含大写字母</label>
-                </div>
-                <div class="control-group">
-                    <input type="checkbox" id="includeLowercase" checked>
-                    <label for="includeLowercase">包含小写字母</label>
-                </div>
-                <div class="control-group">
-                    <input type="checkbox" id="includeNumbers" checked>
-                    <label for="includeNumbers">包含数字</label>
-                </div>
-                <div class="control-group">
-                    <input type="checkbox" id="includeSymbols">
-                    <label for="includeSymbols">包含符号</label>
-                </div>
-                <button id="generatePassword">生成密码</button>
-            </div>
-        </div>
-
-        <div id="md5Generator" class="tool-content">
-            <h1>MD5 生成器</h1>
-            <div class="md5-input-group">
-                <textarea id="md5Input" placeholder="输入文本..."></textarea>
-            </div>
-            <div class="md5-output-group">
-                <input type="text" id="md5Output" readonly placeholder="MD5 结果">
-                <button id="copyMd5">复制</button>
-            </div>
-            <button id="calculateMd5">计算 MD5</button>
-        </div>
-
-        <div id="urlEncoderDecoder" class="tool-content">
-            <h1>URL 编码/解码</h1>
-            <div class="url-input-group">
-                <textarea id="urlInput" placeholder="输入 URL 文本..."></textarea>
-            </div>
-            <div class="url-button-group">
-                <button id="encodeUrl">编码</button>
-                <button id="decodeUrl">解码</button>
-            </div>
-            <div class="url-output-group">
-                <textarea id="urlOutput" readonly placeholder="结果"></textarea>
-            </div>
-            <button id="copyUrlOutput">复制结果</button>
-        </div>
-
-        <div id="jsonFormatter" class="tool-content">
-            <h1>JSON 格式化</h1>
-            <div class="json-input-group">
-                <textarea id="jsonInput" placeholder="输入 JSON 文本..."></textarea>
-            </div>
-            <div class="json-button-group">
-                <button id="formatJson">格式化</button>
-                <button id="minifyJson">压缩</button>
-            </div>
-            <div class="json-output-group">
-                <textarea id="jsonOutput" readonly placeholder="格式化/压缩结果"></textarea>
-            </div>
-            <button id="copyJsonOutput">复制结果</button>
-        </div>
-
-        <div id="timestampConverter" class="tool-content">
-            <h1>时间戳转换</h1>
-            <div class="timestamp-input-group">
-                <label for="timestampInput">时间戳 (秒/毫秒):</label>
-                <input type="text" id="timestampInput" placeholder="输入时间戳">
-                <button id="convertTimestampToDate">转换为日期</button>
-            </div>
-            <div class="date-input-group">
-                <label for="dateInput">日期时间 (YYYY-MM-DD HH:MM:SS):</label>
-                <input type="datetime-local" id="dateInput">
-                <button id="convertDateToTimestamp">转换为时间戳</button>
-            </div>
-            <div class="timestamp-output-group">
-                <input type="text" id="convertedResult" readonly placeholder="转换结果">
-                <button id="copyConvertedResult">复制结果</button>
-            </div>
-        </div>
+        <main id="app-content">
+            <!-- 模块内容将在这里动态渲染 -->
+        </main>
     </div>
+
+    <!-- 依赖库 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="script.js"></script>
+    <!-- 主模块脚本 -->
+    <script type="module" src="script.js"></script>
 </body>
+
+</html>

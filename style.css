@@ -1,213 +1,349 @@
+/* 全局变量 */
+:root {
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --input-bg: rgba(0, 0, 0, 0.2);
+    --success: #10b981;
+    --success-hover: #059669;
+    --glass-blur: blur(12px);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+.app-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.app-background::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 50%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 800px; /* 进一步扩大容器以容纳更多内容，适应 PC 端 */
+    max-width: 900px;
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(to right, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 30px;
     text-align: center;
-    position: relative; /* 用于定位tab按钮 */
+    letter-spacing: -0.5px;
 }
 
-h1 {
-    color: #0056b3;
-    margin-bottom: 25px;
-}
-
+/* Tab 导航 */
 .tool-selector {
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-    flex-wrap: wrap; /* 允许换行 */
+    gap: 10px;
+    background: var(--input-bg);
+    padding: 6px;
+    border-radius: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tool-selector::-webkit-scrollbar {
+    display: none;
 }
 
 .tab-button {
-    background-color: #f0f0f0;
+    flex: 1;
+    min-width: fit-content;
+    padding: 12px 20px;
     border: none;
-    padding: 10px 15px; /* 调整padding以适应更多按钮 */
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 500;
     cursor: pointer;
-    font-size: 1em;
-    color: #555;
-    transition: background-color 0.2s, color 0.2s;
-    border-radius: 5px 5px 0 0;
-    margin: 0 2px;
-    flex-grow: 1; /* 允许按钮平均分配空间 */
-    min-width: fit-content; /* 确保按钮内容不被挤压 */
-    white-space: nowrap; /* 防止文字换行 */
+    transition: var(--transition);
+    white-space: nowrap;
 }
 
 .tab-button:hover {
-    background-color: #e0e0e0;
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .tab-button.active {
-    background-color: #007bff;
+    background: var(--primary-color);
     color: white;
-    border-bottom: 2px solid #007bff;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
+/* 工具内容通用样式 */
 .tool-content {
-    display: none; /* 默认隐藏所有内容 */
-    padding-top: 20px; /* 为内容区留出顶部空间 */
+    animation: fadeIn 0.4s ease-out;
 }
 
-.tool-content.active {
-    display: block; /* 激活时显示 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.password-display, .md5-output-group, .url-output-group, .json-output-group, .timestamp-output-group { /* 添加 timestamp-output-group */
-    display: flex;
-    margin-bottom: 25px;
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-main);
 }
 
-#passwordOutput, #md5Output, #urlOutput, #jsonOutput, #convertedResult { /* 添加 #convertedResult */
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px 0 0 4px;
-    font-size: 1em;
-    background-color: #e9e9e9;
-    word-break: break-all; /* 防止长密码撑开布局 */
+/* 输入/显示区域 */
+.password-display,
+.result-display,
+.input-area,
+.output-area {
+    margin-bottom: 24px;
 }
 
-#copyPassword, #copyMd5, #copyUrlOutput, #copyJsonOutput, #copyConvertedResult { /* 添加 #copyConvertedResult */
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 0 4px 4px 0;
+input[type="text"],
+input[type="number"],
+textarea,
+input[type="datetime-local"] {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--input-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-size: 16px;
+    outline: none;
+    transition: var(--transition);
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* 按钮 */
+button {
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: var(--transition);
+    border-radius: 12px;
+    border: none;
 }
 
-#copyPassword:hover, #copyMd5:hover, #copyUrlOutput:hover, #copyJsonOutput:hover, #copyConvertedResult:hover { /* 添加 #copyConvertedResult */
-    background-color: #0056b3;
+.primary-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--success);
+    color: white;
+    margin-top: 10px;
+}
+
+.primary-btn:hover {
+    background: var(--success-hover);
+    transform: translateY(-1px);
+}
+
+.secondary-btn {
+    padding: 12px 24px;
+    background: var(--primary-color);
+    color: white;
+}
+
+.secondary-btn:hover {
+    background: var(--primary-hover);
+}
+
+.copy-btn {
+    padding: 0 20px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 0 12px 12px 0;
+    margin-left: -5px;
+    /* 紧贴输入框 */
+}
+
+/* 布局辅助 */
+.password-display,
+.result-display {
+    display: flex;
+}
+
+.password-display input,
+.result-display input {
+    border-radius: 12px 0 0 12px;
 }
 
 .controls {
-    text-align: left;
+    display: grid;
+    gap: 16px;
 }
 
 .control-group {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 16px;
+    border-radius: 12px;
 }
 
 .control-group label {
-    flex-grow: 1;
-    margin-left: 10px;
+    flex: 1;
+    font-size: 15px;
+    color: var(--text-muted);
 }
 
-.control-group input[type="range"] {
-    width: 60%;
-    margin-right: 10px;
+input[type="range"] {
+    appearance: none;
+    width: 150px;
+    height: 6px;
+    background: var(--input-bg);
+    border-radius: 3px;
+    outline: none;
 }
 
-#generatePassword, #calculateMd5, #encodeUrl, #decodeUrl, #copyUrlOutput, #formatJson, #minifyJson, #copyJsonOutput, #convertTimestampToDate, #convertDateToTimestamp { /* 添加时间转换器按钮 */
-    width: 100%;
-    padding: 12px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1.1em;
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--primary-color);
+    border-radius: 50%;
     cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 20px;
+    border: 3px solid #fff;
 }
 
-#generatePassword:hover, #calculateMd5:hover, #encodeUrl:hover, #decodeUrl:hover, #copyUrlOutput:hover, #formatJson:hover, #minifyJson:hover, #copyJsonOutput:hover, #convertTimestampToDate:hover, #convertDateToTimestamp:hover { /* 添加时间转换器按钮 */
-    background-color: #218838;
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-color);
 }
 
-.md5-input-group, .url-input-group, .json-input-group, .timestamp-input-group, .date-input-group { /* 添加时间转换器输入组 */
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.control-group-vertical {
     margin-bottom: 20px;
-    display: flex; /* 让label和input在同一行 */
-    flex-direction: column; /* 垂直排列 */
-    align-items: flex-start; /* 左对齐 */
 }
 
-.timestamp-input-group label, .date-input-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
+.control-group-vertical label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
 }
 
-#md5Input, #urlInput, #urlOutput, #jsonInput, #jsonOutput, #timestampInput, #dateInput { /* 统一 textarea 和 input 样式 */
-    width: calc(100% - 22px); /* 减去padding和border */
-    min-height: 40px; /* input 增加最小高度 */
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1em;
-    resize: vertical; /* 允许垂直调整大小 */
-    box-sizing: border-box; /* 确保padding和border包含在width内 */
-    margin-top: 5px; /* 与label的间距 */
-}
-
-#timestampInput, #dateInput {
-    min-height: unset; /* input不需要min-height */
-    height: 40px; /* 固定input高度 */
-    resize: none; /* input不允许resize */
-}
-
-
-.url-button-group, .json-button-group { /* 添加 json-button-group */
+.input-with-btn {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    gap: 10px;
 }
 
-.url-button-group button, .json-button-group button { /* 统一按钮样式 */
-    width: 48%; /* 让两个按钮平分宽度 */
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.input-with-btn input {
+    flex: 1;
 }
 
-.url-button-group button:hover, .json-button-group button:hover { /* 统一按钮样式 */
-    background-color: #0056b3;
-}
+/* 响应式适配 */
+@media (max-width: 640px) {
+    body {
+        padding: 0;
+        background: #0f172a;
+        /* 移动端背景纯色保证性能和文字清晰度 */
+    }
 
-
-/* Responsive adjustments */
-@media (max-width: 768px) { /* 调整断点以适应移动设备 */
     .container {
-        margin: 20px;
-        padding: 20px;
-        max-width: 90%; /* 移动设备上更宽 */
+        border-radius: 0;
+        min-height: 100vh;
+        padding: 30px 20px;
+        border: none;
     }
 
     .tool-selector {
-        flex-direction: column; /* 移动设备上按钮垂直排列 */
+        padding: 4px;
     }
 
     .tab-button {
-        width: 100%;
-        margin-bottom: 5px; /* 按钮之间增加间距 */
+        padding: 8px 12px;
+        font-size: 13px;
     }
 
-    .url-button-group, .json-button-group {
-        flex-direction: column;
+    h1 {
+        font-size: 20px;
     }
-    .url-button-group button, .json-button-group button {
-        width: 100%;
-        margin-bottom: 10px;
+
+    .control-group label {
+        font-size: 14px;
+    }
+
+    input[type="range"] {
+        width: 100px;
     }
 }
