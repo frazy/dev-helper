@@ -1,9 +1,11 @@
+import { copyToClipboard } from '../../script.js';
+
 export const PasswordModule = {
     render: () => `
         <div id="passwordGenerator" class="tool-content active">
             <h1>密码生成器</h1>
             <div class="password-display">
-                <input type="text" id="passwordOutput" readonly>
+                <input type="text" id="passwordOutput" readonly placeholder="点击生成按钮">
                 <button id="copyPassword" class="copy-btn">复制</button>
             </div>
             <div class="controls">
@@ -14,21 +16,21 @@ export const PasswordModule = {
                 </div>
                 <div class="control-group">
                     <input type="checkbox" id="includeUppercase" checked>
-                    <label for="includeUppercase">包含大写字母</label>
+                    <label for="includeUppercase">包含大写字母 (A-Z)</label>
                 </div>
                 <div class="control-group">
                     <input type="checkbox" id="includeLowercase" checked>
-                    <label for="includeLowercase">包含小写字母</label>
+                    <label for="includeLowercase">包含小写字母 (a-z)</label>
                 </div>
                 <div class="control-group">
                     <input type="checkbox" id="includeNumbers" checked>
-                    <label for="includeNumbers">包含数字</label>
+                    <label for="includeNumbers">包含数字 (0-9)</label>
                 </div>
                 <div class="control-group">
                     <input type="checkbox" id="includeSymbols">
-                    <label for="includeSymbols">包含符号</label>
+                    <label for="includeSymbols">包含符号 (!@#$%...)</label>
                 </div>
-                <button id="generatePassword" class="primary-btn">生成密码</button>
+                <button id="generatePassword" class="primary-btn">立即生成</button>
             </div>
         </div>
     `,
@@ -56,7 +58,6 @@ export const PasswordModule = {
             if (includeSymbols.checked) characters += symbolChars;
 
             if (characters === '') {
-                alert('请至少选择一个字符类型！');
                 passwordOutput.value = '';
                 return;
             }
@@ -70,24 +71,13 @@ export const PasswordModule = {
             passwordOutput.value = password;
         };
 
-        const copy = () => {
-            if (passwordOutput.value) {
-                navigator.clipboard.writeText(passwordOutput.value)
-                    .then(() => alert('密码已复制到剪贴板！'))
-                    .catch(err => alert('复制失败，请手动复制。'));
-            } else {
-                alert('没有密码可供复制。');
-            }
-        };
-
         passwordLength.addEventListener('input', () => {
             lengthValue.textContent = passwordLength.value;
         });
 
         generatePasswordBtn.addEventListener('click', generate);
-        copyPasswordBtn.addEventListener('click', copy);
+        copyPasswordBtn.addEventListener('click', () => copyToClipboard(passwordOutput.value));
 
-        // 初始生成一次
         generate();
     }
 };

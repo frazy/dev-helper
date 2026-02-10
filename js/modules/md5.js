@@ -1,3 +1,5 @@
+import { copyToClipboard } from '../../script.js';
+
 export const Md5Module = {
     render: () => `
         <div id="md5Generator" class="tool-content active">
@@ -5,41 +7,45 @@ export const Md5Module = {
             <div class="input-area">
                 <textarea id="md5Input" placeholder="在此输入需要转换的文本..."></textarea>
             </div>
-            <div class="output-area">
+            
+            <div class="control-group-vertical">
+                <label>32位小写</label>
                 <div class="result-display">
-                    <input type="text" id="md5Output" readonly placeholder="MD5 结果">
-                    <button id="copyMd5" class="copy-btn">复制</button>
+                    <input type="text" id="md5Lower" readonly placeholder="结果将实时显示">
+                    <button id="copyMd5Lower" class="copy-btn">复制</button>
                 </div>
-                <button id="calculateMd5" class="primary-btn">计算 MD5</button>
+            </div>
+
+            <div class="control-group-vertical">
+                <label>32位大写</label>
+                <div class="result-display">
+                    <input type="text" id="md5Upper" readonly placeholder="结果将实时显示">
+                    <button id="copyMd5Upper" class="copy-btn">复制</button>
+                </div>
             </div>
         </div>
     `,
     init: () => {
         const md5Input = document.getElementById('md5Input');
-        const md5Output = document.getElementById('md5Output');
-        const calculateMd5Btn = document.getElementById('calculateMd5');
-        const copyMd5Btn = document.getElementById('copyMd5');
+        const md5Lower = document.getElementById('md5Lower');
+        const md5Upper = document.getElementById('md5Upper');
+        const copyLowerBtn = document.getElementById('copyMd5Lower');
+        const copyUpperBtn = document.getElementById('copyMd5Upper');
 
         const calculate = () => {
             const text = md5Input.value;
             if (text) {
                 const hash = CryptoJS.MD5(text).toString();
-                md5Output.value = hash;
+                md5Lower.value = hash.toLowerCase();
+                md5Upper.value = hash.toUpperCase();
             } else {
-                md5Output.value = '';
+                md5Lower.value = '';
+                md5Upper.value = '';
             }
         };
 
-        calculateMd5Btn.addEventListener('click', calculate);
         md5Input.addEventListener('input', calculate);
-        copyMd5Btn.addEventListener('click', () => {
-            if (md5Output.value) {
-                navigator.clipboard.writeText(md5Output.value)
-                    .then(() => alert('MD5 值已复制到剪贴板！'))
-                    .catch(() => alert('复制失败，请手动复制。'));
-            } else {
-                alert('没有 MD5 值可供复制。');
-            }
-        });
+        copyLowerBtn.addEventListener('click', () => copyToClipboard(md5Lower.value));
+        copyUpperBtn.addEventListener('click', () => copyToClipboard(md5Upper.value));
     }
 };

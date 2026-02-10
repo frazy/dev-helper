@@ -15,6 +15,33 @@ const modules = {
 const appContent = document.getElementById('app-content');
 const tabButtons = document.querySelectorAll('.tab-button');
 
+// 全局 Toast 系统
+export function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // 动画触发
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
+}
+
+// 统一复制函数
+export function copyToClipboard(text, successMsg = '已复制到剪贴板') {
+    if (!text) {
+        showToast('没有内容可供复制', 'error');
+        return;
+    }
+    navigator.clipboard.writeText(text)
+        .then(() => showToast(successMsg))
+        .catch(() => showToast('复制失败，请手动复制', 'error'));
+}
+
 function navigate(moduleId) {
     const module = modules[moduleId];
     if (!module) return;

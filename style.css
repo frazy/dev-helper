@@ -219,20 +219,36 @@ button {
     background: var(--primary-hover);
 }
 
+.password-display,
+.result-display,
+.item-display {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 24px;
+}
+
+.password-display input,
+.result-display input,
+.item-display input {
+    flex: 1;
+    min-width: 0;
+    /* 允许压缩以防溢出 */
+    border-radius: 12px 0 0 12px;
+}
+
 .copy-btn {
-    padding: 0 20px;
+    flex-shrink: 0;
+    /* 禁止复制按钮变形 */
+    white-space: nowrap;
+    padding: 0 24px;
     background: var(--primary-color);
     color: white;
     border-radius: 0 12px 12px 0;
-    margin-left: -5px;
-    /* 紧贴输入框 */
+    font-size: 14px;
 }
 
+
 /* 布局辅助 */
-.password-display,
-.result-display {
-    display: flex;
-}
 
 .password-display input,
 .result-display input {
@@ -309,6 +325,36 @@ input[type="checkbox"] {
 
 .input-with-btn input {
     flex: 1;
+}
+
+/* Toast 提示 */
+.toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transition: var(--transition);
+    z-index: 1000;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-error {
+    border-color: #ef4444;
 }
 
 /* 响应式适配 */
