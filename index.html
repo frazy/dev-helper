@@ -5,10 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>开发者助手 - Dev Helper</title>
-    <base href="/dev/">
+    <!-- <base href="/dev/"> -->
     <!-- 引入外部字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 引入 Phosphor Icons (用于界面图标) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="style.css">
+    <!-- 引入 Highlight.js 用于 JSON 高亮显示 -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
 </head>
 
 <body>
@@ -17,11 +24,21 @@
         <aside class="sidebar">
             <div class="logo">Dev Helper</div>
             <nav class="tool-selector">
-                <button class="tab-button" data-tab="passwordGenerator">密码生成</button>
-                <button class="tab-button" data-tab="md5Generator">MD5 生成</button>
-                <button class="tab-button" data-tab="urlEncoderDecoder">URL 编解码</button>
-                <button class="tab-button" data-tab="jsonFormatter">JSON 格式化</button>
-                <button class="tab-button" data-tab="timestampConverter">时间戳转换</button>
+                <button class="tab-button" data-tab="passwordGenerator">
+                    <i class="ph ph-key"></i>密码生成
+                </button>
+                <button class="tab-button" data-tab="md5Generator">
+                    <i class="ph ph-hash"></i>Hash 加密
+                </button>
+                <button class="tab-button" data-tab="urlEncoderDecoder">
+                    <i class="ph ph-link"></i>URL 编解码
+                </button>
+                <button class="tab-button" data-tab="jsonFormatter">
+                    <i class="ph ph-brackets-curly"></i>JSON 格式化
+                </button>
+                <button class="tab-button" data-tab="timestampConverter">
+                    <i class="ph ph-clock"></i>时间戳转换
+                </button>
             </nav>
             <div class="sidebar-footer">
                 v2.0 Extreme
