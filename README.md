@@ -72,6 +72,38 @@ dev-helper/
    ```
    构建产物将输出在 `dist` 目录中。
 
+## 🌐 Nginx 部署配置
+
+由于本项目使用 Vue Router 的 History 模式 (`createWebHistory`)，在直接访问深层路由（如 `/dev/password`）或刷新页面时，如果 Nginx 未做相应配置，会报 404 错误。
+
+若您的应用部署在 Nginx 的子路径（例如 `/dev/`）下，请在配置中添加 `try_files` 兜底规则，将所有未找到的请求重定向到 `index.html`：
+
+```nginx
+server {
+    # ... 其他配置
+
+    location = /dev {
+        alias /var/www/dev-helper/index.html;
+        add_header Content-Type text/html;
+    }
+
+    location /dev/ {
+        alias /var/www/dev-helper/;
+        index index.html;
+        
+        # 关键配置：找不到文件时退回 index.html 给前端路由接管
+        try_files $uri $uri/ /dev/index.html; 
+        
+        add_header Content-Type text/html;
+    }
+}
+```
+
+修改完成后，请记得重载 Nginx 配置以使其生效：
+```bash
+sudo nginx -s reload
+```
+
 ## 📝 许可证
 
 请参阅项目中的 [LICENSE](./LICENSE) 文件获取相关授权信息。
