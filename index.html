@@ -1,60 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>开发者助手 - Dev Helper</title>
-    <!-- <base href="/dev/"> -->
-    <!-- 引入外部字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- 引入 Phosphor Icons (用于界面图标) -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="stylesheet" href="style.css">
-    <!-- 引入 Highlight.js 用于 JSON 高亮显示 -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开发者助手 - Dev Helper</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-
 <body>
-    <div class="app-background"></div>
-    <div class="container main-layout">
-        <aside class="sidebar">
-            <div class="logo">Dev Helper</div>
-            <nav class="tool-selector">
-                <button class="tab-button" data-tab="passwordGenerator">
-                    <i class="ph ph-key"></i>密码生成
-                </button>
-                <button class="tab-button" data-tab="md5Generator">
-                    <i class="ph ph-hash"></i>Hash 加密
-                </button>
-                <button class="tab-button" data-tab="urlEncoderDecoder">
-                    <i class="ph ph-link"></i>URL 编解码
-                </button>
-                <button class="tab-button" data-tab="jsonFormatter">
-                    <i class="ph ph-brackets-curly"></i>JSON 格式化
-                </button>
-                <button class="tab-button" data-tab="timestampConverter">
-                    <i class="ph ph-clock"></i>时间戳转换
-                </button>
-            </nav>
-            <div class="sidebar-footer">
-                v2.0 Extreme
-            </div>
-        </aside>
-
-        <main id="app-content" class="content-area">
-            <!-- 模块内容将在这里动态渲染 -->
-        </main>
-    </div>
-
-
-    <!-- 依赖库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <!-- 主模块脚本 -->
-    <script type="module" src="script.js"></script>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
 </body>
-
 </html>
